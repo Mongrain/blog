@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>什么是防抖和节流？有什么区别？如何实现？ | weizheng.pan</title>
+<meta name="description" content="三年老前端，记录一下码畜生活。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="C:/Users/n/Documents/Gridea/output/favicon.ico?v=1575207018371">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="C:/Users/n/Documents/Gridea/output/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="C:/Users/n/Documents/Gridea/output">
+        <img src="C:/Users/n/Documents/Gridea/output/images/avatar.png?v=1575207018371" class="site-logo">
+        <h1 class="site-title">weizheng.pan</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="C:/Users/n/Documents/Gridea/output//index.html" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="C:/Users/n/Documents/Gridea/output/archives/index.html" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="C:/Users/n/Documents/Gridea/output/tags/index.html" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="C:/Users/n/Documents/Gridea/output/post/about/index.html" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      三年老前端，记录一下码畜生活。
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="C:/Users/n/Documents/Gridea/output/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">什么是防抖和节流？有什么区别？如何实现？</h2>
+            <div class="post-date">2019-08-20</div>
+            
+            <div class="post-content">
+              <p>我的回答：<br>
+- 防抖就是在 相同行为 中，只做一次。<br>
+- 节流是在 某个时间范围内 只做一个操作。</p>
+<!-- more -->
+<p>防抖实现</p>
+<pre><code class="language-js">function debounce(fn) {
+	let toggle = false;
+	let timer = null;
+	
+	return () =&gt; {
+		if (!toggle) {
+			toggle = true
+			clearTimeout(timer)
+			fn()
+		}
+		timer = setTimeout(() =&gt; {
+			toggle = false
+		}, 500)
+	}
+}
+</code></pre>
+<p>节流实现</p>
+<pre><code class="language-js">function throttle (fn) {
+	let canTriggle = true;
+	return () =&gt; {
+		if (canTriggle) {
+			canTriggle = false;
+			fn()
+			setTimeout(() =&gt; {
+					canTriggle = true
+			}, 1000)
+		}
+	}
+}
+</code></pre>
+<p>防抖<br>
+触发高频事件后n秒内函数只会执行一次，如果n秒内高频事件再次被触发，则重新计算时间</p>
+<p>思路：<br>
+每次触发事件时都取消之前的延时调用方法</p>
+<pre><code class="language-js">function debounce(fn) {
+	let timeout = null; // 创建一个标记用来存放定时器的返回值
+	return function () {
+		clearTimeout(timeout); // 每当用户输入的时候把前一个 setTimeout clear 掉
+		timeout = setTimeout(() =&gt; { // 然后又创建一个新的 setTimeout, 这样就能保证输入字符后的 interval 间隔内如果还有字符输入的话，就不会执行 fn 函数
+			fn.apply(this, arguments);
+		}, 500);
+	};
+}
+function sayHi() {
+	console.log('防抖成功');
+}
+
+var inp = document.getElementById('inp');
+inp.addEventListener('input', debounce(sayHi)); // 防抖
+</code></pre>
+<p>节流<br>
+高频事件触发，但在n秒内只会执行一次，所以节流会稀释函数的执行频率</p>
+<p>思路：<br>
+每次触发事件时都判断当前是否有等待执行的延时函数</p>
+<pre><code class="language-js">function throttle(fn) {
+	let canRun = true; // 通过闭包保存一个标记
+	return function () {
+		if (!canRun) return; // 在函数开头判断标记是否为true，不为true则return
+		canRun = false; // 立即设置为false
+		setTimeout(() =&gt; { // 将外部传入的函数的执行放在setTimeout中
+			fn.apply(this, arguments);
+			// 最后在setTimeout执行完毕后再把标记设置为true(关键)表示可以执行下一次循环了。当定时器没有执行的时候标记永远是false，在开头被return掉
+			canRun = true;
+		}, 500);
+	};
+}
+function sayHi(e) {
+	console.log(e.target.innerWidth, e.target.innerHeight);
+}
+window.addEventListener('resize', throttle(sayHi));
+</code></pre>
+
+            </div>
+            
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

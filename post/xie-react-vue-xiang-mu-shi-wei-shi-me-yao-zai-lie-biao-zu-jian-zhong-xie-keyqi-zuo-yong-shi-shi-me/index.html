@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>写 React / Vue 项目时为什么要在列表组件中写 key，其作用是什么？ | weizheng.pan</title>
+<meta name="description" content="三年老前端，记录一下码畜生活。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="C:/Users/n/Documents/Gridea/output/favicon.ico?v=1575207018371">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="C:/Users/n/Documents/Gridea/output/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="C:/Users/n/Documents/Gridea/output">
+        <img src="C:/Users/n/Documents/Gridea/output/images/avatar.png?v=1575207018371" class="site-logo">
+        <h1 class="site-title">weizheng.pan</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="C:/Users/n/Documents/Gridea/output//index.html" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="C:/Users/n/Documents/Gridea/output/archives/index.html" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="C:/Users/n/Documents/Gridea/output/tags/index.html" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="C:/Users/n/Documents/Gridea/output/post/about/index.html" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      三年老前端，记录一下码畜生活。
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="C:/Users/n/Documents/Gridea/output/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">写 React / Vue 项目时为什么要在列表组件中写 key，其作用是什么？</h2>
+            <div class="post-date">2019-08-20</div>
+            
+            <div class="post-content">
+              <p>我的回答<br>
+因为React和Vue在底层都是用 vNode 来进行diff，这时候如果给每个组件加上一个唯一的 key 。那么下次遇到同样的 key 就可以对组件进行复用。</p>
+<!-- more -->
+<p>答案：<br>
+vue和react都是采用diff算法来对比新旧虚拟节点，从而进行更新。<br>
+在交叉对比中，如果新节点和旧节点的 <code>头尾交叉对比</code> 没有结果时，会根据新节点的 key 去对比旧节点数组中的 key，从而找到相应旧节点（这里对应的是一个key=&gt;index的map映射）。如果没有找到就认为是一个新增节点。而如果没有 key，那么就会采用遍历查找的方式去找到对应的旧节点。一种一个map映射，另一种是遍历查找。相对而言，map 效率更高。</p>
+<p>Vue 部分源码</p>
+<pre><code class="language-js">// vue项目  src/core/vdom/patch.js  -488行
+// 以下是为了阅读性进行格式化后的代码
+// oldCh 是一个旧虚拟节点数组
+if (isUndef(oldKeyToIdx)) {
+  oldKeyToIdx = createKeyToOldIdx(oldCh, oldStartIdx, oldEndIdx)
+}
+if(isDef(newStartVnode.key)) {
+  // map 方式获取
+  idxInOld = oldKeyToIdx[newStartVnode.key]
+} else {
+  // 遍历方式获取
+  idxInOld = findIdxInOld(newStartVnode, oldCh, oldStartIdx, oldEndIdx)
+}
+</code></pre>
+<p>创建map函数</p>
+<pre><code class="language-js">function createKeyToOldIdx (children, beginIdx, endIdx) {
+  let i, key
+  const map = {}
+  for (i = beginIdx; i &lt;= endIdx; ++i) {
+    key = children[i].key
+    if (isDef(key)) map[key] = i
+  }
+  return map
+}
+</code></pre>
+<p>遍历寻找</p>
+<pre><code class="language-js">// sameVnode 是对比新旧节点是否相同的函数
+function findIdxInOld (node, oldCh, start, end) {
+	for (let i = start; i &lt; end; i++) {
+		const c = oldCh[i]
+
+		if (isDef(c) &amp;&amp; sameVnode(node, c)) return i
+	}
+}
+</code></pre>
+
+            </div>
+            
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

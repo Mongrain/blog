@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Git Flow 科普篇 | weizheng.pan</title>
+<meta name="description" content="三年老前端，记录一下码畜生活。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="C:/Users/n/Documents/Gridea/output/favicon.ico?v=1575207018371">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="C:/Users/n/Documents/Gridea/output/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="C:/Users/n/Documents/Gridea/output">
+        <img src="C:/Users/n/Documents/Gridea/output/images/avatar.png?v=1575207018371" class="site-logo">
+        <h1 class="site-title">weizheng.pan</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="C:/Users/n/Documents/Gridea/output//index.html" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="C:/Users/n/Documents/Gridea/output/archives/index.html" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="C:/Users/n/Documents/Gridea/output/tags/index.html" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="C:/Users/n/Documents/Gridea/output/post/about/index.html" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      三年老前端，记录一下码畜生活。
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="C:/Users/n/Documents/Gridea/output/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Git Flow 科普篇</h2>
+            <div class="post-date">2019-12-01</div>
+            
+            <div class="post-content">
+              <blockquote>
+<p>学习如何使用GitFlow规范化git协作流程， 提升项目管理健壮性，更好的协同工作。</p>
+</blockquote>
+<!-- more -->
+<h3 id="什么是git-flow">什么是Git Flow</h3>
+<p>Git工作流程</p>
+<h3 id="git-flow工作流程图">Git Flow工作流程图</h3>
+<p><img src="https://nvie.com/img/git-model@2x.png" alt="git工作流程图"></p>
+<h4 id="gitflow-分支说明">GitFlow 分支说明</h4>
+<h5 id="master">Master</h5>
+<p>主要是用来放稳定，随时可上线的版本。这个分支的来源只能从别的分支合并过来，开发者不会直接承诺到这个分支。因为是稳定版本，所以通常也会在这个分支上的提交上打版本号号标签。</p>
+<h5 id="develop">Develop</h5>
+<p>这个分支主要是所有开发的基础分支，当要新增功能的时候，所有的特征分支都是从这个分支切出去的。而特征分支的功能完成后，也都会合并回来这个分支</p>
+<h5 id="hotfix">Hotfix</h5>
+<p>当线上产品发生紧急问题的时候，会从 Master 分支开一个 Hotfix 分支出来进行修复，Hotfix 分支修复完成之后，会合并回 Master 分支，也同时会合并一份到 Develop 分支。</p>
+<p>为什么要合并回 Develop 分支？如果不这么做，等到时候 Develop 分支完成并且合并回 Master 分支的时候，那个问题就又再次出现了。</p>
+<p>那为什么一开始不从 Develop 分支切出来修？因为 Develop 分支的功能可能尚在开发中，这时候硬是要从这里切出去修再合并回 Master 分支，只会造成更大的灾难。</p>
+<h5 id="release">Release</h5>
+<p>当认为 Develop 分支够成熟了，就可以把 Develop 分支合并到 Release 分支，在这边进行算是上线前的最后测试。测试完成后，Release 分支将会同时合并到 Master 以及 Develop 这两个分支上。 Master 分支是上线版本，而合并回 Develop 分支的目的，是因为可能在 Release 分支上还会测到并修正一些问题，所以需要跟 Develop 分支同步，免得之后的版本又再度出现同样的问题。</p>
+<h5 id="feature">Feature</h5>
+<p>当要开始新增功能的时候，就是使用 Feature 分支的时候了。 Feature 分支都是从 Develop 分支来的，完成之后会再并回 Develop 分支</p>
+<h4 id="从项目一步步带你入坑-by-命令行">从项目一步步带你入坑 by 命令行</h4>
+<h5 id="开展本地项目-连接到coding服务器github同理">开展本地项目 &amp;&amp; 连接到coding服务器(github同理)</h5>
+<pre><code class="language-gitbash"># 初始化一个项目
+mkdir project &amp;&amp; cd project
+# 添加gitignore文件
+vi .gitignore
+# 添加项目说明
+vi README.md
+# 初始化git项目
+git init
+# 添加所有文件到暂存区
+git add .
+# 向本地仓库提交当前的变动
+git commit -m &quot;chore: init&quot;
+# 添加到远程链接
+git remote add origin https://git.coding.net/panweizheng/demo.git
+# 上传到master
+git push -u origin master
+</code></pre>
+<h5 id="设置分支保护">设置分支保护</h5>
+<p>这里coding，码云和github是均有所不同， 大家可以自行查看</p>
+<p>在分支管理员加上自己<br>
+<img src="http://ww1.sinaimg.cn/large/6d9c0eadgy1fublgkddfcj21gi0nf40a.jpg" alt=""></p>
+<h5 id="回到本地开发">回到本地开发</h5>
+<pre><code class="language-gitbash"># 创建一个develop 分支
+git checkout -b develop
+# 把 develop 分支推到远程仓库（并-u设置为当前分支默认 pull 的远程分支）,在Git Flow流程里这个分支将会永远存在
+git push -u origin develop
+</code></pre>
+<h5 id="需求来了">需求来了</h5>
+<ul>
+<li>
+<ol>
+<li>新建Feature分支</li>
+</ol>
+</li>
+</ul>
+<pre><code class="language-gitbash">git checkout develop
+git checkout -b feature/my-first-feature
+</code></pre>
+<ul>
+<li>
+<ol start="2">
+<li>举例补充README.md说明</li>
+</ol>
+</li>
+</ul>
+<pre><code class="language-gitbash">echo 'It is test' &gt;&gt; README.md
+</code></pre>
+<ul>
+<li>
+<ol start="3">
+<li>添加到缓存区</li>
+</ol>
+</li>
+</ul>
+<pre><code class="language-gitbash">git add README.md
+</code></pre>
+<ul>
+<li>
+<ol start="4">
+<li>提交变更</li>
+</ol>
+</li>
+</ul>
+<pre><code class="language-gitbash">git commit -m 'docs: 补充说明'
+</code></pre>
+<ul>
+<li>
+<ol start="5">
+<li>如果是多人协同，则可上传到远程服务器，待特性开发完毕再删除</li>
+</ol>
+</li>
+</ul>
+<pre><code class="language-gitbash">git push origin feature/my-first-feature
+</code></pre>
+<ul>
+<li>
+<ol start="6">
+<li>开发过程中需要不断的把当前develop更新，减少合并时冲突</li>
+</ol>
+</li>
+</ul>
+<pre><code class="language-gitbash">git fetch origin develop
+git merge origin/develop
+# 上面这两句也可以合并为  git pull origin develop
+</code></pre>
+<h4 id="发布">发布</h4>
+<p>当Feature已经开发完毕，并且已经通过测试，这时候就需要把Feature分支合并到Develop</p>
+<pre><code class="language-gitbash"># 切换到develop
+git checkout develop
+# 拉取远程develop并更新本地develop
+git pull origin develop
+# merge本地开发好的Feature分支
+git merge feature/my-first-feature
+# 合并完毕后即可删除Feature
+git branch -d feature/my-first-feature
+git push origin --delete feature/my-first-feature
+# 提交develop分支到远程分支
+git push
+# 准备发布feature,从 develop 分支新建release分支
+git checkout -b release/v0.0.1
+# 最后验证，如果由bug直接在release中修改
+vi xx.js
+git add xx.js
+git commit -m 'fix: xx.js bug'
+git checkout develop
+git merge release/v0.0.1
+git push
+# 正式发布
+git checkout release/v0.0.1
+git push origin release/v0.0.1
+</code></pre>
+<h5 id="新建合并请求1">新建合并请求①</h5>
+<p>提pr拉</p>
+<p><img src="http://ww1.sinaimg.cn/large/6d9c0eadgy1fubmog2dsqj219z0hgt9e.jpg" alt=""></p>
+<p><img src="http://ww1.sinaimg.cn/large/6d9c0eadgy1fubmrhmpgdj219v0okjs9.jpg" alt=""></p>
+<h5 id="合并请求2">合并请求②</h5>
+<p><img src="http://ww1.sinaimg.cn/large/6d9c0eadgy1fubmtjln7zj20sk0giaah.jpg" alt=""></p>
+<p><img src="http://ww1.sinaimg.cn/large/6d9c0eadgy1fubmuxys66j21an0i6aau.jpg" alt=""></p>
+<p>至此 项目上线终于完毕了</p>
+<h5 id="but-万一线上出bug了呢">but! 万一线上出bug了呢</h5>
+<p>给你两条路 o.o</p>
+<p>1 . 回滚到上个稳定版本</p>
+<p>2 . 新建hotfix分支来解决这个bug</p>
+<p>这里主要还是建议使用hotfix. 毕竟新功能开发出来不用很亏的嘛</p>
+<pre><code class="language-gitbash">git checkout master 
+git pull origin master
+git checkout -b hotfix/my-first-bug
+# 改bug
+vi xx.js
+git add xx.js
+git commit -m 'fix: xx.js bug'
+git push origin hotfix/my-first-bug
+# 步骤重复 新建合并请求① &amp;&amp; 合并请求②
+# 合并之后回到本地
+git checkout master
+git pull origin master
+# merge修改过的代码
+git checkout develop
+git merge hotfix/my-first-bug
+git push origin develop
+# 发布完成后,删除本地hotfix分支
+git branch -d hotfix/my-first-bug
+# 在合并界面时我们删除了源分支，因此我们还需同步远程分支变动
+git fetch origin -p
+</code></pre>
+<p>回滚文件级别</p>
+<pre><code class="language-gitbash">git checkout master
+git pull origin master
+git checkout -b hotfix/my-first-bug
+# 查看某个文件历史
+git log xx.js
+# 恢复到某个版本的文件
+git reset 12345678 xx.js
+# 提交
+git cimmit -m 'fix: xx.js bug'
+# 验证如果没有bug 推送到远程分支
+git push origin hotfix/my-first-bug
+# 步骤重复 新建合并请求① &amp;&amp; 合并请求②
+# 合并后切回master, 拉取最新代码
+git checkout master
+git pull origin master
+# 发布完成后,删除本地hotfix分支
+git branch -d hotfix/my-first-bug
+# 在合并界面时我们删除了源分支，因此我们还需同步远程分支变动
+git fetch origin -p
+</code></pre>
+<p>回滚项目级别</p>
+<p>__不建议__使用命令操作远程仓库</p>
+<p>__建议__重新拉取远程仓库</p>
+<p>保证目录干净</p>
+<ul>
+<li>方法1 git checkout -b origin/分支名称</li>
+<li>方法2 git checkout &lt;commitId or Tag&gt;</li>
+</ul>
+<p>如果是多人协同，则可上传到远程服务</p>
+<h4 id="最后-git-flow-你值得拥有">最后， Git-Flow 你值得拥有。</h4>
+<p>参考</p>
+<ul>
+<li>https://github.com/nvie/gitflow</li>
+<li>https://www.git-tower.com/learn/git/ebook/cn/command-line/advanced-topics/git-flow</li>
+<li>https://datasift.github.io/gitflow/IntroducingGitFlow.html</li>
+<li>https://gitbook.tw/chapters/gitflow/why-need-git-flow.html</li>
+</ul>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="C:/Users/n/Documents/Gridea/output/post/dom-event-de-fa-zhan-li-shi/index.html">
+                  <h3 class="post-title">
+                     DOM Event的发展历史 
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

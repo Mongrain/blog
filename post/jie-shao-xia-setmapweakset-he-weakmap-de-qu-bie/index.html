@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>介绍下 Set、Map、WeakSet 和 WeakMap 的区别？ | weizheng.pan</title>
+<meta name="description" content="三年老前端，记录一下码畜生活。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="C:/Users/n/Documents/Gridea/output/favicon.ico?v=1575207018371">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="C:/Users/n/Documents/Gridea/output/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="C:/Users/n/Documents/Gridea/output">
+        <img src="C:/Users/n/Documents/Gridea/output/images/avatar.png?v=1575207018371" class="site-logo">
+        <h1 class="site-title">weizheng.pan</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="C:/Users/n/Documents/Gridea/output//index.html" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="C:/Users/n/Documents/Gridea/output/archives/index.html" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="C:/Users/n/Documents/Gridea/output/tags/index.html" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="C:/Users/n/Documents/Gridea/output/post/about/index.html" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      三年老前端，记录一下码畜生活。
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="C:/Users/n/Documents/Gridea/output/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">介绍下 Set、Map、WeakSet 和 WeakMap 的区别？</h2>
+            <div class="post-date">2019-08-22</div>
+            
+            <div class="post-content">
+              <p>Set 可以作为一个唯一值的数组存储，可以对数据进行遍历，常用方法有 add delete has clear</p>
+<p>Map 的话是映射，和对象不同能用 对象 作为key。 并且也可以遍历</p>
+<p>WeakSet ...<br>
+WeakMap ...</p>
+<!-- more -->
+<p>Set (集合)<br>
+ES6 新增的一种新的数据结构，类似于数组，但成员是唯一且无序的，没有重复的值。<br>
+Set 本身是一种构造函数，用来生成 Set 数据结构。</p>
+<pre><code class="language-js">	const s = new Set()
+	[1,2,3,4,1,2,3].forEach(x =&gt; s.add(x))
+	s.length // undefined
+	for(let i of s) {
+		console.log(i) // 1,2,3,4
+	}
+	s.size // 4
+</code></pre>
+<p>操作方法</p>
+<ul>
+<li>add(value)：新增，相当于 array里的push</li>
+<li>delete(value)：存在即删除集合中value</li>
+<li>has(value)：判断集合中是否存在 value</li>
+<li>clear()：清空集合</li>
+</ul>
+<p>Set 最优秀的解法</p>
+<pre><code class="language-js">	let set1 = new Set([1, 2, 3]);
+	let set2 = new Set([4, 3, 2]);
+	let intersect = new Set([...set1].map(value =&gt; set2.has(value))) // 交集
+	let intersect = new Set([...set1, ...set2]) // 并集
+	let intersect = new Set([...set1].map(value =&gt; !set2.has(value))) // 差集
+</code></pre>
+<p>WeakSet<br>
+WeakSet 对象允许你将弱引用对象储存在一个集合中<br>
+WeakSet 与 Set 的区别：</p>
+<ul>
+<li>WeakSet 只能储存对象引用，不能存放值，而 Set 对象都可以</li>
+<li>WeakSet 对象中储存的对象值都是被弱引用的，即垃圾回收机制不考虑 WeakSet 对该对象的应用，如果没有其他的变量或属性引用这个对象值，则这个对象将会被垃圾回收掉（不考虑该对象还存在于 WeakSet 中），所以，WeakSet 对象里有多少个成员元素，取决于垃圾回收机制有没有运行，运行前后成员个数可能不一致，遍历结束之后，有的成员可能取不到了（被垃圾回收了），WeakSet 对象是无法被遍历的（ES6 规定 WeakSet 不可遍历），也没有办法拿到它包含的所有元素</li>
+</ul>
+<p>字典（Map）<br>
+集合 与 字典 的区别：</p>
+<ul>
+<li>共同点：集合、字典 可以储存不重复的值</li>
+<li>不同点：集合 是以 [value, value]的形式储存元素，字典 是以 [key, value] 的形式储存</li>
+</ul>
+<p>操作方法：</p>
+<ul>
+<li>set(key, value)：向字典中添加新元素</li>
+<li>get(key)：通过键查找特定的数值并返回</li>
+<li>has(key)：判断字典中是否存在键key</li>
+<li>delete(key)：通过键 key 从字典中移除对应的数据</li>
+<li>clear()：将这个字典中的所有元素删除<br>
+遍历方法：</li>
+<li>Keys()：将字典中包含的所有键名以迭代器形式返回</li>
+<li>values()：将字典中包含的所有数值以迭代器形式返回</li>
+<li>entries()：返回所有成员的迭代器</li>
+<li>forEach()：遍历字典的所有成员</li>
+</ul>
+<pre><code class="language-js">	const map = new Map([
+			['name', 'An'],
+			['des', 'JS']
+	]);
+	console.log(map.entries())	// MapIterator {&quot;name&quot; =&gt; &quot;An&quot;, &quot;des&quot; =&gt; &quot;JS&quot;}
+	console.log(map.keys()) // MapIterator {&quot;name&quot;, &quot;des&quot;}
+</code></pre>
+<p>WeakMap<br>
+WeakMap 对象是一组键值对的集合，其中的键是弱引用对象，而值可以是任意。<br>
+注意，WeakMap 弱引用的只是键名，而不是键值。键值依然是正常引<br>
+WeakMap 中，每个键对自己所引用对象的引用都是弱引用，在没有其他引用和该键引用同一对象，这个对象将会被垃圾回收（相应的key则变成无效的），所以，WeakMap 的 key 是不可枚举的。</p>
+
+            </div>
+            
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

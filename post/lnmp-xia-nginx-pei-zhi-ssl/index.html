@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>lnmp下nginx配置ssl | weizheng.pan</title>
+<meta name="description" content="三年老前端，记录一下码畜生活。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="C:/Users/n/Documents/Gridea/output/favicon.ico?v=1575207018371">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="C:/Users/n/Documents/Gridea/output/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="C:/Users/n/Documents/Gridea/output">
+        <img src="C:/Users/n/Documents/Gridea/output/images/avatar.png?v=1575207018371" class="site-logo">
+        <h1 class="site-title">weizheng.pan</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="C:/Users/n/Documents/Gridea/output//index.html" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="C:/Users/n/Documents/Gridea/output/archives/index.html" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="C:/Users/n/Documents/Gridea/output/tags/index.html" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="C:/Users/n/Documents/Gridea/output/post/about/index.html" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      三年老前端，记录一下码畜生活。
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="C:/Users/n/Documents/Gridea/output/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">lnmp下nginx配置ssl</h2>
+            <div class="post-date">2019-11-17</div>
+            
+            <div class="post-content">
+              <p>帮助所有的新手玩家配置SSL，它没有HTTP那么简单，只需要开放个80端口，还是需要一些额外的配置，这里把步骤都记录下来，以后排查问题更加简单。</p>
+<!-- more -->
+<p>1）<br>
+首先申请域名ssl。申请的时候注意看域名，比如 example.com / www.example.com 。因为如果用免费版的ssl，只能对应出这个 server name 的 443 端口</p>
+<p>2）<br>
+审核通过之后，下载证书，放在nginx下 如 /usr/local/nginx/cert 目录下。里面应该含有 *.pem *.key 两个文件，改成名 a.pem a.key。</p>
+<p>3）<br>
+配置阿里云服务器的安全组，开通允许 443 端口访问</p>
+<p>4）<br>
+nginx conf 增加下面 server 配置 反向代理端口</p>
+<pre><code class="language-nginx">server {
+        listen 443 ssl;
+        server_name www.example.com;
+
+        ssl_certificate   /usr/local/nginx/cert/a.pem;
+        ssl_certificate_key  /usr/local/nginx/cert/a.key;
+
+        ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
+        ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+        ssl_prefer_server_ciphers on;
+
+        location / {
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header Host $http_host;
+          proxy_set_header X-NginX-Proxy true;
+          proxy_pass http://127.0.0.1:8000;
+          proxy_redirect off;
+        }
+}
+
+</code></pre>
+<p>配置完成后即可访问 https://www.example.com</p>
+
+            </div>
+            
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

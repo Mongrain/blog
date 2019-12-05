@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Babel之babylon | weizheng.pan</title>
+<meta name="description" content="三年老前端，记录一下码畜生活。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="C:/Users/n/Documents/Gridea/output/favicon.ico?v=1575207018371">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="C:/Users/n/Documents/Gridea/output/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="C:/Users/n/Documents/Gridea/output">
+        <img src="C:/Users/n/Documents/Gridea/output/images/avatar.png?v=1575207018371" class="site-logo">
+        <h1 class="site-title">weizheng.pan</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="C:/Users/n/Documents/Gridea/output//index.html" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="C:/Users/n/Documents/Gridea/output/archives/index.html" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="C:/Users/n/Documents/Gridea/output/tags/index.html" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="C:/Users/n/Documents/Gridea/output/post/about/index.html" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      三年老前端，记录一下码畜生活。
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="C:/Users/n/Documents/Gridea/output/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Babel之babylon</h2>
+            <div class="post-date">2019-12-01</div>
+            
+            <div class="post-content">
+              <blockquote>
+<p>ES6、ES7如何转化成ES5</p>
+</blockquote>
+<!-- more -->
+<p>这几天研究了一下 <em>jamiebuilds</em> 的 <em>the-super-tiny-compiler</em> 链接参上 https://github.com/jamiebuilds/the-super-tiny-compiler</p>
+<p>终于意识到自己一直可以毫无节操的使用ES6 ES7 ES8等到底是为啥 ， 作为一个一直花未来钱的人， 终究是要还的 [手动滑稽]</p>
+<p><em>jamiebuilds</em> 写的一个 <em>the-super-tiny-compiler</em> 应该就算是 <em>babylon</em> 的主要原理之一， 在这里记录一下学习的经历，免得以后过一段时间便遗忘， 并且也可以给现在看文章的你， 一些帮助。</p>
+<p>名词解释</p>
+<p><strong>AST</strong>： 抽象语法树</p>
+<h4 id="先说说原理">先说说原理</h4>
+<p>Babel 的三个主要处理步骤分别是： 解析（parse），转换（transform），生成（generate）。</p>
+<p><img src="http://ww1.sinaimg.cn/large/6d9c0eadgy1fuzthgay2vj20mz06gdfw.jpg" alt=""></p>
+<p>babel其实很简单， 没有高大上的编译原理xxx的。其实底层也相当于用了一个字符串替换的工具。</p>
+<h4 id="下面实现一下简单babel替换">下面实现一下简单babel替换</h4>
+<pre><code class="language-js">// 首先我们引入需要依赖的库 babylon 
+// 主要作为解析抽象语法书 遍历语法树 生成代码
+// babel-types是类似于前端的lodash工具库 （提升开发效率）
+// babel-template是可以让前端使用类似于es6的字符串模板 即允许带有占位符的代码来代替手动编码
+// 详细可看 上面安利的github链接
+import * as babylon from 'babylon'
+import traverse from 'babel-traverse'
+import * as t from 'babel-types'
+import generate from 'babel-generator'
+import template from 'babel-template'
+
+// template里的是源代码
+const buildRequire = template(`
+  let foo = 1
+`)
+
+// 替换如果遇到identifier类型的并且是foo的 即转成bar
+// 这里identifier是节点的类型
+const ast = buildRequire({
+  foo: t.identifier('bar')
+})
+
+console.log(ast) // let bar = 1;
+
+
+</code></pre>
+<p>这里已经是完成了代码的转换，十分的简单</p>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="C:/Users/n/Documents/Gridea/output/post/liao-yi-liao-qian-hou-tai-tong-xun-jia-mi/index.html">
+                  <h3 class="post-title">
+                    聊一聊前后台通讯加密
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

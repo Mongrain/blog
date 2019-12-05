@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title> DOM Event的发展历史  | weizheng.pan</title>
+<meta name="description" content="三年老前端，记录一下码畜生活。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="C:/Users/n/Documents/Gridea/output/favicon.ico?v=1575207018371">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="C:/Users/n/Documents/Gridea/output/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="C:/Users/n/Documents/Gridea/output">
+        <img src="C:/Users/n/Documents/Gridea/output/images/avatar.png?v=1575207018371" class="site-logo">
+        <h1 class="site-title">weizheng.pan</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="C:/Users/n/Documents/Gridea/output//index.html" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="C:/Users/n/Documents/Gridea/output/archives/index.html" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="C:/Users/n/Documents/Gridea/output/tags/index.html" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="C:/Users/n/Documents/Gridea/output/post/about/index.html" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      三年老前端，记录一下码畜生活。
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="C:/Users/n/Documents/Gridea/output/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title"> DOM Event的发展历史 </h2>
+            <div class="post-date">2019-12-01</div>
+            
+            <div class="post-content">
+              <p>谈及到这里 我们就需要先了解一下什么是DOM0级 DOM一级 DOM二级， Think about it.. 以前我们刚刚学js的时候写的dom是怎么样的？</p>
+<!-- more -->
+<h3 id="dom-0级">DOM 0级</h3>
+<p>写在HTML页面中</p>
+<pre><code class="language-html">&lt;button onclick=&quot;fn&quot;&gt;Click&lt;/button&gt;
+</code></pre>
+<pre><code class="language-js">// 绑定
+function fn() {
+  console.log(123123)
+}
+// 取消
+fn = null
+</code></pre>
+<p>先说说有什么好处 有什么不好..<br>
+好处就是方便啊  直接定一个函数 删除函数简单 引申_二级绑定_</p>
+<p>坏处是什么..</p>
+<p><em>代码入侵， 耦合度高</em> 如果这里需要修改一个变量名 则HTML和JS都要同时修改 如果HTML有多处命名 难免在某些情况下会漏掉.</p>
+<h3 id="dom-1级">DOM 1级</h3>
+<p>其实本来没有dom一级的说法.. 只是这个方法比0级要好 但是又比dom2级的事件委托稍微好一点点</p>
+<pre><code class="language-html">&lt;button id=&quot;btn&quot;&gt;Click&lt;/button&gt;
+</code></pre>
+<pre><code class="language-js">function func() {
+  console.log('hello')
+}
+// 绑定
+document.getElementById('btn').addEventListener('click', func)
+// 取消
+document.getElementById('btn').removeEventListener('click', func)
+
+</code></pre>
+<p><strong>坏处是啥</strong></p>
+<p>每一个元素都得绑定一个事件 如果我有一个 3 * 3 的表格 每一个点击的时候需要弹出一个 modal 显示详细的信息 此时则需要绑定 9次 才能解决这个问题</p>
+<p>还有硬要我说就是 解除绑定的时候有点麻烦..</p>
+<p><strong>好处是啥</strong></p>
+<p>降低代码耦合度 虽然每个元素都绑定一个id 或者 class 但是这个已经比 DOM0级好太多了  至少变量名只需要写一次..</p>
+<p>还有一个就是可以把js独立开来 打个比方： 如果你在网上看了别人一个写得很漂亮的库， 你把它download下来， 然后只需要在你希望触发的元素里加上 标识 [id,class] 就可以实现功能 . 这就是生产力啊。</p>
+<h3 id="dom-2级-dom操作的主流">DOM 2级 (DOM操作的主流)</h3>
+<pre><code class="language-html">&lt;table id=&quot;table&quot;&gt;
+  &lt;tr&gt;
+    &lt;td&gt;1&lt;/td&gt;
+    &lt;td&gt;2&lt;/td&gt;
+    &lt;td&gt;3&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;4&lt;/td&gt;
+    &lt;td&gt;5&lt;/td&gt;
+    &lt;td&gt;6&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;7&lt;/td&gt;
+    &lt;td&gt;8&lt;/td&gt;
+    &lt;td&gt;9&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+</code></pre>
+<pre><code class="language-js">// 触发的函数
+function func(e) {
+  console.log('当前我的是', e.target.innerHTML)
+}
+// 绑定
+document.getElementById('table').addEventListener('click', func)
+// 取消
+document.getElementById('table').removeEventListener('click', func)
+</code></pre>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="C:/Users/n/Documents/Gridea/output/post/qian-duan-xing-neng-you-hua/index.html">
+                  <h3 class="post-title">
+                    前端性能优化
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

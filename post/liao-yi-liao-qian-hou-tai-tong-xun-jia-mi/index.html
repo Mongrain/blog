@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>聊一聊前后台通讯加密 | weizheng.pan</title>
+<meta name="description" content="三年老前端，记录一下码畜生活。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="C:/Users/n/Documents/Gridea/output/favicon.ico?v=1575207018371">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="C:/Users/n/Documents/Gridea/output/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="C:/Users/n/Documents/Gridea/output">
+        <img src="C:/Users/n/Documents/Gridea/output/images/avatar.png?v=1575207018371" class="site-logo">
+        <h1 class="site-title">weizheng.pan</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="C:/Users/n/Documents/Gridea/output//index.html" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="C:/Users/n/Documents/Gridea/output/archives/index.html" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="C:/Users/n/Documents/Gridea/output/tags/index.html" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="C:/Users/n/Documents/Gridea/output/post/about/index.html" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      三年老前端，记录一下码畜生活。
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="C:/Users/n/Documents/Gridea/output/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">聊一聊前后台通讯加密</h2>
+            <div class="post-date">2019-12-01</div>
+            
+            <div class="post-content">
+              <blockquote>
+<p>在开发程序的时候或多或少都有遇到过不想让别人爬到的数据， 尤其在前后台分离的页面中， 往往我们的数据只是通过一个接口就能得到，这里说一下加密方式的其中一种实现</p>
+</blockquote>
+<!-- more -->
+<p>在开发中往往有许多的加密方式， 但我们使用最多的就算AES对称加密</p>
+<p>但是AES中也有许多种模式</p>
+<h4 id="ecb模式电子密码本模式electronic-codebook">ECB模式（电子密码本模式：Electronic codebook）</h4>
+<p>ECB是最简单的块密码加密模式，加密前根据加密块大小（如AES为128位）分成若干块，之后将每块使用相同的密钥单独加密，解密同理。</p>
+<p>ECB模式由于每块数据的加密是独立的因此加密和解密都可以并行计算，ECB模式最大的缺点是相同的明文块会被加密成相同的密文块，这种方法在某些环境下不能提供严格的数据保密性。</p>
+<h4 id="cbc模式密码分组链接cipher-block-chaining">CBC模式（密码分组链接：Cipher-block chaining）</h4>
+<p>CBC模式对于每个待加密的密码块在加密前会先与前一个密码块的密文异或然后再用加密器加密。第一个明文块与一个叫初始化向量的数据块异或。</p>
+<p>CBC模式相比ECB有更高的保密性，但由于对每个数据块的加密依赖与前一个数据块的加密所以加密无法并行。与ECB一样在加密前需要对数据进行填充，不是很适合对流数据进行加密。</p>
+<h4 id="cfb模式密文反馈cipher-feedback">CFB模式(密文反馈:Cipher feedback)</h4>
+<p>与ECB和CBC模式只能够加密块数据不同，CFB能够将块密文（Block Cipher）转换为流密文（Stream Cipher）。</p>
+<p>注意:CFB、OFB和CTR模式中解密也都是用的加密器而非解密器。<br>
+CFB的加密工作分为两部分：</p>
+<p>1. 将一前段加密得到的密文再加密；</p>
+<p>2. 将第1步加密得到的数据与当前段的明文异或。</p>
+<p>由于加密流程和解密流程中被块加密器加密的数据是前一段密文，因此即使明文数据的长度不是加密块大小的整数倍也是不需要填充的，这保证了数据长度在加密前后是相同的。</p>
+<p>这种模式称为128位的CFB模式(又称CFB128)在OpenSSL中用来进行这种加解密的函数为AES_cfb128_encrypt</p>
+<h4 id="cfb8的加密流程">CFB8的加密流程</h4>
+<p>1. 使用加密器加密IV的数据；</p>
+<p>2. 将明文的最高8位与IV的最高8位异或得到8位密文；</p>
+<p>3. 将IV数据左移8位，最低8位用刚刚计算得到的8位密文补上。</p>
+<p>重复1到3。</p>
+<h4 id="cfb1的加密流程">CFB1的加密流程</h4>
+<p>1. 使用加密器加密IV的数据；</p>
+<p>2. 将明文的最高1位与IV的最高1位异或得到1位密文；</p>
+<p>3. 将IV数据左移1位，最低1位用刚刚计算得到的1位密文补上。</p>
+<p>重复1到3。</p>
+<h4 id="ofb模式输出反馈output-feedback">OFB模式（输出反馈：Output feedback）</h4>
+<p>OFB是先用块加密器生成密钥流（Keystream），然后再将密钥流与明文流异或得到密文流，解密是先用块加密器生成密钥流，再将密钥流与密文流异或得到明文，由于异或操作的对称性所以加密和解密的流程是完全一样的。</p>
+<p>OFB与CFB一样都非常适合对流数据的加密，OFB由于加密和解密都依赖与前一段数据，所以加密和解密都不能并行。</p>
+<p>以上即是AES加密的所有模式，但是我们在通讯过程中一般使用的是CBC模式下面我们具体看看CBC这个模式</p>
+<h5 id="cbc加解密流程图">CBC加解密流程图</h5>
+<p>加解密流程</p>
+<p><img src="https://ws1.sinaimg.cn/large/6d9c0eadgy1g9h0z77la5j20gg0ck75a.jpg" alt=""></p>
+<p>在假如我们前后台分离的情况下， 我们默认前端使用nodejs, 即使不是，我们前端解密方式理应一致.</p>
+<p>下面代码用到一个 key<br>
+初始密钥。根据 AES 规范，可以是 16 字节、24 字节和32 字节长，分别对应 128 位、192 位和 256 位</p>
+<p>因此这里的key需要为一个32位长度的字符串 (只要是字符串即可)</p>
+<p>key = '71343515636659378109866164286152'</p>
+<pre><code class="language-JS">  //加密
+  const enCrypt = () =&gt; {
+  // 待加密数据 向量iv 加密器 加密后密码串 
+  let bkdata, iv, cipher, coder;
+  // IV(长度与分组大小相同)  AES 的分组长度固定为 16 字节
+  iv = Buffer.alloc(16);
+  for (var i = 0 ; i &lt; 16 ; i++) {
+    iv[i] = ~~(Math.random() * 10);
+  }
+  // 待加密数据
+  bkdata = {
+    &quot;errcode&quot;: 0,
+    &quot;errmsg&quot;: &quot;ok&quot;
+  }
+
+  cipher = crypto.createCipheriv(&quot;aes-256-cbc&quot;, key, iv);
+  coder = [];
+  // 设置自动补全
+  cipher.setAutoPadding(true)
+  // 往密码串塞数据, 并使用base64加密
+  coder.push(cipher.update(JSON.stringify(bkdata), &quot;utf8&quot;, &quot;base64&quot;));
+  // 使用base64加密剩余填充部分  具体看nodejs官网介绍
+  coder.push(cipher.final(&quot;base64&quot;));
+  // 转成字符串
+  let back = coder.join(&quot;&quot;);
+  let buf;
+  // 把iv与加密数据合并,
+  buf = Buffer.concat([iv,new Buffer(back, 'base64')]);
+  // 转译成base64
+  let en_data = buf.toString('base64');
+  return en_data
+}
+</code></pre>
+<pre><code class="language-js">  //解密  消息体在body
+  const deCrypt = (body) =&gt; {
+  // 向量iv  待解密数据  buf  加密器  解密后数据   
+  let iv, enData, b, cipher, dedata;
+  ctx.encrypt_type = body;
+
+  b = new Buffer(body, 'base64');  //转成buf
+  iv = b.slice(0,16);
+  enData = b.slice(16);
+
+  cipher = crypto.createDecipheriv(&quot;aes-256-cbc&quot;, key, iv);
+  dedata = ''
+  dedata += cipher.update(enData);
+  dedata += cipher.final();
+  try {
+    dedata = JSON.parse(dedata)
+  }catch(e) {
+    dedata = '解密失败'
+  }
+  return dedata;
+}
+</code></pre>
+<p>在浏览器中和在nodejs中实现原理是一致的， 这里只需要通过引入 __buffer__和__browserify-aes__这两个库， 即可解决上述问题。</p>
+<p>还有一种方式。<br>
+目前这里key是通过接口返回给前端， 去掉buffer这个库，减少前端代码体积，就是iv和key都通过接口，这里还可以节省一个buffer的库，直接可用browserify-aes库解决</p>
+<p>即</p>
+<pre><code class="language-js">  // 这里是直接通过接口返回
+  const key = '71343515636659378109866164286152'
+  // IV(长度与分组大小相同)  AES 的分组长度固定为 16 字节
+  const iv = Buffer.alloc(16);
+  for (var i = 0 ; i &lt; 16 ; i++) {
+    iv[i] = ~~(Math.random() * 10);
+  }
+  return {
+    key,iv
+  }
+</code></pre>
+<pre><code class="language-JS">  //加密
+  const enCrypt = () =&gt; {
+  // 待加密数据 加密器 加密后密码串 
+  let bkdata, cipher, coder;
+  // 待加密数据
+  bkdata = {
+    &quot;errcode&quot;: 0,
+    &quot;errmsg&quot;: &quot;ok&quot;
+  }
+
+  // iv 从上面代码获取
+  cipher = crypto.createCipheriv(&quot;aes-256-cbc&quot;, key, iv);
+  coder = [];
+  // 设置自动补全
+  cipher.setAutoPadding(true)
+  // 往密码串塞数据, 并使用base64加密
+  coder.push(cipher.update(JSON.stringify(bkdata), &quot;utf8&quot;, &quot;base64&quot;));
+  // 使用base64加密剩余填充部分  具体看nodejs官网介绍
+  coder.push(cipher.final(&quot;base64&quot;));
+  // 转成字符串
+  let back = coder.join(&quot;&quot;);
+  let buf;
+  // 把iv与加密数据合并,
+  buf = Buffer.concat([iv,new Buffer(back, 'base64')]);
+  // 转译成base64
+  let en_data = buf.toString('base64');
+  return en_data
+}
+</code></pre>
+<pre><code class="language-js">  //解密  消息体在body
+  const deCrypt = (body) =&gt; {
+  // 向量iv  待解密数据  buf  加密器  解密后数据   
+  let iv, enData, b, cipher, dedata;
+  enData = body;
+
+  // iv通过上面代码获取
+  cipher = crypto.createDecipheriv(&quot;aes-256-cbc&quot;, key, iv);
+  dedata = ''
+  dedata += cipher.update(enData);
+  dedata += cipher.final();
+  try {
+    dedata = JSON.parse(dedata)
+  }catch(e) {
+    dedata = '解密失败'
+  }
+  return dedata;
+}
+</code></pre>
+<p>这里只是一种实现的方式，只是如果把iv隐藏到字符串中，爬虫的人应该更难知道使用的是哪种模式的加密。如果暴露iv出去则可猜测出可能是需要初始向量的加密模式， 当然你也可用使用欺骗的方式，多传个iv， 哈哈。可惜意义不大。</p>
+<br>
+<h5 id="总结-在前人栽树后人乘凉的情况下只是对数据加密这块并不复杂难的是这些加密背后的原理-如果大家看完还有余力-可以去下面的参考-再延伸一下">总结： 在前人栽树后人乘凉的情况下，只是对数据加密这块并不复杂，难的是这些加密背后的原理 如果大家看完还有余力， 可以去下面的参考 再延伸一下.</h5>
+<br>
+<br>
+<p>参考:</p>
+<ul>
+<li>https://blog.csdn.net/Vieri_32/article/details/48345023</li>
+<li>https://blog.poxiao.me/p/advanced-encryption-standard-and-block-cipher-mode/</li>
+<li>http://www.dannysite.com/blog/213/</li>
+</ul>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="C:/Users/n/Documents/Gridea/output/post/git-flow-ke-pu-pian/index.html">
+                  <h3 class="post-title">
+                    Git Flow 科普篇
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

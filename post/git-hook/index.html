@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Git Hook | weizheng.pan</title>
+<meta name="description" content="三年老前端，记录一下码畜生活。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="C:/Users/n/Documents/Gridea/output/favicon.ico?v=1575207018371">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="C:/Users/n/Documents/Gridea/output/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="C:/Users/n/Documents/Gridea/output">
+        <img src="C:/Users/n/Documents/Gridea/output/images/avatar.png?v=1575207018371" class="site-logo">
+        <h1 class="site-title">weizheng.pan</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="C:/Users/n/Documents/Gridea/output//index.html" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="C:/Users/n/Documents/Gridea/output/archives/index.html" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="C:/Users/n/Documents/Gridea/output/tags/index.html" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="C:/Users/n/Documents/Gridea/output/post/about/index.html" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      三年老前端，记录一下码畜生活。
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="C:/Users/n/Documents/Gridea/output/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Git Hook</h2>
+            <div class="post-date">2019-12-01</div>
+            
+            <div class="post-content">
+              <blockquote>
+<p>论防止互相喂shi？代码不规范，您是让他推呢，还是不推呢？</p>
+</blockquote>
+<!-- more -->
+<h4 id="如何代码规范化">如何代码规范化?</h4>
+<p>当然第一步就是让代码风格一致了。 为什么这么说，假设你的团队里，有几个前端开发同事， 你喜欢不写分号， 你的leader凑巧又是非分号不可， 那你代码是不是就得跟着团队走呢， 如果他们用的都是4个空格， 唯独你一个两个分号，那么你是要换呢 还是不换呢， 问题抛出来，那么怎么解决呢？</p>
+<h4 id="airbnb-和-standard">Airbnb 和 standard</h4>
+<p>业界较多使用 Airbnb 和 standard 两个受欢迎程度不相上下， Airbnb倾向于配置化。 而standard则倾向于统一规则， 只要用了standard则都要遵守他的规则。</p>
+<p>当然了。 如果不嫌麻烦， 肯定是Airbnb要好， 自家的孩子， 自己管。</p>
+<p>在我们使用Git的时候</p>
+<p>我们都知道，提交代码</p>
+<pre><code class="language-bash">git commit -m 'message'
+</code></pre>
+<p>不管你的代码如何， 这都能上传了。 but！ 上面我们已经强调过了， 代码规范化的问题，so. 如果我们能在commit之前做一次代码检测就好了。</p>
+<p>duang duang duang 。。 好东西来了</p>
+<h5 id="husky-和-lint-staged"><strong>husky</strong> 和 <strong>lint-staged</strong></h5>
+<p>GIT地址</p>
+<p>husky: https://github.com/typicode/husky</p>
+<p>lint-staged : https://github.com/okonet/lint-staged#configuration</p>
+<h6 id="husky"><strong>husky</strong></h6>
+<p>添加包</p>
+<pre><code class="language-bash">npm install husky --save-dev
+</code></pre>
+<pre><code class="language-json">// .huskyrc
+{
+  &quot;hooks&quot;: {
+    &quot;pre-commit&quot;: &quot;npm test&quot;
+  }
+}
+</code></pre>
+<p>在package.json中 即可</p>
+<pre><code class="language-js">{
+ &quot;husky&quot;: {
+   &quot;hooks&quot;: {
+     &quot;pre-commit&quot;: &quot;npm test&quot;,
+     &quot;commit-msg&quot;: &quot;commitlint -E HUSKY_GIT_PARAMS&quot;
+   }
+ }
+}
+</code></pre>
+<h6 id="lint-staged"><strong>lint-staged</strong></h6>
+<p>添加包</p>
+<pre><code class="language-bash">npm install --save-dev lint-staged husky
+</code></pre>
+<p>.stylelintrc 定义</p>
+<pre><code class="language-json">{
+  &quot;extends&quot;: &quot;stylelint-config-standard&quot;,
+  &quot;rules&quot;: {
+    &quot;selector-pseudo-class-no-unknown&quot;: null,
+    &quot;shorthand-property-no-redundant-values&quot;: null,
+    &quot;at-rule-empty-line-before&quot;: null,
+    &quot;at-rule-name-space-after&quot;: null,
+    &quot;comment-empty-line-before&quot;: null,
+    &quot;declaration-bang-space-before&quot;: null,
+    &quot;declaration-empty-line-before&quot;: null,
+    &quot;function-comma-newline-after&quot;: null,
+    &quot;function-name-case&quot;: null,
+    &quot;function-parentheses-newline-inside&quot;: null,
+    &quot;function-max-empty-lines&quot;: null,
+    &quot;function-whitespace-after&quot;: null,
+    &quot;number-leading-zero&quot;: null,
+    &quot;number-no-trailing-zeros&quot;: null,
+    &quot;rule-empty-line-before&quot;: null,
+    &quot;selector-combinator-space-after&quot;: null,
+    &quot;selector-list-comma-newline-after&quot;: null,
+    &quot;selector-pseudo-element-colon-notation&quot;: null,
+    &quot;unit-no-unknown&quot;: null,
+    &quot;no-descending-specificity&quot;: null,
+    &quot;value-list-max-empty-lines&quot;: null
+  }
+}
+</code></pre>
+<p>在package.json中 即可</p>
+<pre><code class="language-js">{
+  &quot;scripts&quot;: {
+    &quot;precommit&quot;: &quot;npm run lint-staged&quot;,
+  },
+  &quot;lint-staged&quot;: {
+    &quot;**/*.{js,jsx}&quot;: &quot;lint-staged:js&quot;,
+    &quot;**/*.less&quot;: &quot;stylelint --syntax less&quot;
+  },
+}
+</code></pre>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="C:/Users/n/Documents/Gridea/output/post/babel-zhi-babylon/index.html">
+                  <h3 class="post-title">
+                    Babel之babylon
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>
