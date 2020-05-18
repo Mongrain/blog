@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://no-ane.github.io/blog</id>
-    <title>我的征途是星辰大海</title>
-    <updated>2020-05-18T16:19:23.210Z</updated>
+    <title>Gusty</title>
+    <updated>2020-05-18T16:21:58.038Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://no-ane.github.io/blog"/>
     <link rel="self" href="https://no-ane.github.io/blog/atom.xml"/>
     <subtitle>记录一下码畜生活。</subtitle>
     <logo>https://no-ane.github.io/blog/images/avatar.png</logo>
     <icon>https://no-ane.github.io/blog/favicon.ico</icon>
-    <rights>All rights reserved 2020, 我的征途是星辰大海</rights>
+    <rights>All rights reserved 2020, Gusty</rights>
     <entry>
         <title type="html"><![CDATA[Git Hook]]></title>
         <id>https://no-ane.github.io/blog/post/git-hook</id>
