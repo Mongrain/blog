@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://no-ane.github.io/blog</id>
+    <id>https://no-ane.github.io</id>
     <title>weizheng.pan</title>
-    <updated>2019-12-05T14:49:59.538Z</updated>
+    <updated>2020-05-18T16:04:08.009Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://no-ane.github.io/blog"/>
-    <link rel="self" href="https://no-ane.github.io/blog/atom.xml"/>
+    <link rel="alternate" href="https://no-ane.github.io"/>
+    <link rel="self" href="https://no-ane.github.io/atom.xml"/>
     <subtitle>三年老前端，记录一下码畜生活。</subtitle>
-    <logo>https://no-ane.github.io/blog/images/avatar.png</logo>
-    <icon>https://no-ane.github.io/blog/favicon.ico</icon>
-    <rights>All rights reserved 2019, weizheng.pan</rights>
+    <logo>https://no-ane.github.io/images/avatar.png</logo>
+    <icon>https://no-ane.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2020, weizheng.pan</rights>
     <entry>
         <title type="html"><![CDATA[Git Hook]]></title>
-        <id>https://no-ane.github.io/blog/post/git-hook</id>
-        <link href="https://no-ane.github.io/blog/post/git-hook">
+        <id>https://no-ane.github.io/post/git-hook</id>
+        <link href="https://no-ane.github.io/post/git-hook">
         </link>
         <updated>2019-12-01T03:29:23.000Z</updated>
         <summary type="html"><![CDATA[<blockquote>
@@ -107,8 +107,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[Babel之babylon]]></title>
-        <id>https://no-ane.github.io/blog/post/babel-zhi-babylon</id>
-        <link href="https://no-ane.github.io/blog/post/babel-zhi-babylon">
+        <id>https://no-ane.github.io/post/babel-zhi-babylon</id>
+        <link href="https://no-ane.github.io/post/babel-zhi-babylon">
         </link>
         <updated>2019-12-01T02:45:51.000Z</updated>
         <summary type="html"><![CDATA[<blockquote>
@@ -160,8 +160,8 @@ console.log(ast) // let bar = 1;
     </entry>
     <entry>
         <title type="html"><![CDATA[聊一聊前后台通讯加密]]></title>
-        <id>https://no-ane.github.io/blog/post/liao-yi-liao-qian-hou-tai-tong-xun-jia-mi</id>
-        <link href="https://no-ane.github.io/blog/post/liao-yi-liao-qian-hou-tai-tong-xun-jia-mi">
+        <id>https://no-ane.github.io/post/liao-yi-liao-qian-hou-tai-tong-xun-jia-mi</id>
+        <link href="https://no-ane.github.io/post/liao-yi-liao-qian-hou-tai-tong-xun-jia-mi">
         </link>
         <updated>2019-12-01T02:39:37.000Z</updated>
         <summary type="html"><![CDATA[<blockquote>
@@ -343,8 +343,8 @@ CFB的加密工作分为两部分：</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[Git Flow 科普篇]]></title>
-        <id>https://no-ane.github.io/blog/post/git-flow-ke-pu-pian</id>
-        <link href="https://no-ane.github.io/blog/post/git-flow-ke-pu-pian">
+        <id>https://no-ane.github.io/post/git-flow-ke-pu-pian</id>
+        <link href="https://no-ane.github.io/post/git-flow-ke-pu-pian">
         </link>
         <updated>2019-12-01T02:35:00.000Z</updated>
         <summary type="html"><![CDATA[<blockquote>
@@ -561,8 +561,8 @@ git fetch origin -p
     </entry>
     <entry>
         <title type="html"><![CDATA[ DOM Event的发展历史 ]]></title>
-        <id>https://no-ane.github.io/blog/post/dom-event-de-fa-zhan-li-shi</id>
-        <link href="https://no-ane.github.io/blog/post/dom-event-de-fa-zhan-li-shi">
+        <id>https://no-ane.github.io/post/dom-event-de-fa-zhan-li-shi</id>
+        <link href="https://no-ane.github.io/post/dom-event-de-fa-zhan-li-shi">
         </link>
         <updated>2019-12-01T02:23:06.000Z</updated>
         <summary type="html"><![CDATA[<p>谈及到这里 我们就需要先了解一下什么是DOM0级 DOM一级 DOM二级， Think about it.. 以前我们刚刚学js的时候写的dom是怎么样的？</p>
@@ -635,8 +635,8 @@ document.getElementById('table').removeEventListener('click', func)
     </entry>
     <entry>
         <title type="html"><![CDATA[前端性能优化]]></title>
-        <id>https://no-ane.github.io/blog/post/qian-duan-xing-neng-you-hua</id>
-        <link href="https://no-ane.github.io/blog/post/qian-duan-xing-neng-you-hua">
+        <id>https://no-ane.github.io/post/qian-duan-xing-neng-you-hua</id>
+        <link href="https://no-ane.github.io/post/qian-duan-xing-neng-you-hua">
         </link>
         <updated>2019-12-01T01:57:38.000Z</updated>
         <summary type="html"><![CDATA[<p>老生常谈的性能优化点，不过很多同学都会把SSR这类增加用户体验的优化点也作为性能优化，这还是有一定的区别的。</p>
@@ -663,8 +663,8 @@ document.getElementById('table').removeEventListener('click', func)
     </entry>
     <entry>
         <title type="html"><![CDATA[lnmp下nginx配置ssl]]></title>
-        <id>https://no-ane.github.io/blog/post/lnmp-xia-nginx-pei-zhi-ssl</id>
-        <link href="https://no-ane.github.io/blog/post/lnmp-xia-nginx-pei-zhi-ssl">
+        <id>https://no-ane.github.io/post/lnmp-xia-nginx-pei-zhi-ssl</id>
+        <link href="https://no-ane.github.io/post/lnmp-xia-nginx-pei-zhi-ssl">
         </link>
         <updated>2019-11-17T02:13:27.000Z</updated>
         <summary type="html"><![CDATA[<p>帮助所有的新手玩家配置SSL，它没有HTTP那么简单，只需要开放个80端口，还是需要一些额外的配置，这里把步骤都记录下来，以后排查问题更加简单。</p>
