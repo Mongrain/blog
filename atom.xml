@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://no-ane.github.io</id>
-    <title>weizheng.pan</title>
-    <updated>2020-05-18T16:04:50.801Z</updated>
+    <id>https://no-ane.github.io/blog</id>
+    <title>我的征途是星辰大海</title>
+    <updated>2020-05-18T16:14:34.982Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://no-ane.github.io"/>
-    <link rel="self" href="https://no-ane.github.io/atom.xml"/>
-    <subtitle>三年老前端，记录一下码畜生活。</subtitle>
-    <logo>https://no-ane.github.io/images/avatar.png</logo>
-    <icon>https://no-ane.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2020, weizheng.pan</rights>
+    <link rel="alternate" href="https://no-ane.github.io/blog"/>
+    <link rel="self" href="https://no-ane.github.io/blog/atom.xml"/>
+    <subtitle>记录一下码畜生活。</subtitle>
+    <logo>https://no-ane.github.io/blog/images/avatar.png</logo>
+    <icon>https://no-ane.github.io/blog/favicon.ico</icon>
+    <rights>All rights reserved 2020, 我的征途是星辰大海</rights>
     <entry>
         <title type="html"><![CDATA[Git Hook]]></title>
-        <id>https://no-ane.github.io/post/git-hook</id>
-        <link href="https://no-ane.github.io/post/git-hook">
+        <id>https://no-ane.github.io/blog/post/git-hook</id>
+        <link href="https://no-ane.github.io/blog/post/git-hook">
         </link>
         <updated>2019-12-01T03:29:23.000Z</updated>
         <summary type="html"><![CDATA[<blockquote>
@@ -23,92 +23,12 @@
         <content type="html"><![CDATA[<blockquote>
 <p>论防止互相喂shi？代码不规范，您是让他推呢，还是不推呢？</p>
 </blockquote>
-<!-- more -->
-<h4 id="如何代码规范化">如何代码规范化?</h4>
-<p>当然第一步就是让代码风格一致了。 为什么这么说，假设你的团队里，有几个前端开发同事， 你喜欢不写分号， 你的leader凑巧又是非分号不可， 那你代码是不是就得跟着团队走呢， 如果他们用的都是4个空格， 唯独你一个两个分号，那么你是要换呢 还是不换呢， 问题抛出来，那么怎么解决呢？</p>
-<h4 id="airbnb-和-standard">Airbnb 和 standard</h4>
-<p>业界较多使用 Airbnb 和 standard 两个受欢迎程度不相上下， Airbnb倾向于配置化。 而standard则倾向于统一规则， 只要用了standard则都要遵守他的规则。</p>
-<p>当然了。 如果不嫌麻烦， 肯定是Airbnb要好， 自家的孩子， 自己管。</p>
-<p>在我们使用Git的时候</p>
-<p>我们都知道，提交代码</p>
-<pre><code class="language-bash">git commit -m 'message'
-</code></pre>
-<p>不管你的代码如何， 这都能上传了。 but！ 上面我们已经强调过了， 代码规范化的问题，so. 如果我们能在commit之前做一次代码检测就好了。</p>
-<p>duang duang duang 。。 好东西来了</p>
-<h5 id="husky-和-lint-staged"><strong>husky</strong> 和 <strong>lint-staged</strong></h5>
-<p>GIT地址</p>
-<p>husky: https://github.com/typicode/husky</p>
-<p>lint-staged : https://github.com/okonet/lint-staged#configuration</p>
-<h6 id="husky"><strong>husky</strong></h6>
-<p>添加包</p>
-<pre><code class="language-bash">npm install husky --save-dev
-</code></pre>
-<pre><code class="language-json">// .huskyrc
-{
-  &quot;hooks&quot;: {
-    &quot;pre-commit&quot;: &quot;npm test&quot;
-  }
-}
-</code></pre>
-<p>在package.json中 即可</p>
-<pre><code class="language-js">{
- &quot;husky&quot;: {
-   &quot;hooks&quot;: {
-     &quot;pre-commit&quot;: &quot;npm test&quot;,
-     &quot;commit-msg&quot;: &quot;commitlint -E HUSKY_GIT_PARAMS&quot;
-   }
- }
-}
-</code></pre>
-<h6 id="lint-staged"><strong>lint-staged</strong></h6>
-<p>添加包</p>
-<pre><code class="language-bash">npm install --save-dev lint-staged husky
-</code></pre>
-<p>.stylelintrc 定义</p>
-<pre><code class="language-json">{
-  &quot;extends&quot;: &quot;stylelint-config-standard&quot;,
-  &quot;rules&quot;: {
-    &quot;selector-pseudo-class-no-unknown&quot;: null,
-    &quot;shorthand-property-no-redundant-values&quot;: null,
-    &quot;at-rule-empty-line-before&quot;: null,
-    &quot;at-rule-name-space-after&quot;: null,
-    &quot;comment-empty-line-before&quot;: null,
-    &quot;declaration-bang-space-before&quot;: null,
-    &quot;declaration-empty-line-before&quot;: null,
-    &quot;function-comma-newline-after&quot;: null,
-    &quot;function-name-case&quot;: null,
-    &quot;function-parentheses-newline-inside&quot;: null,
-    &quot;function-max-empty-lines&quot;: null,
-    &quot;function-whitespace-after&quot;: null,
-    &quot;number-leading-zero&quot;: null,
-    &quot;number-no-trailing-zeros&quot;: null,
-    &quot;rule-empty-line-before&quot;: null,
-    &quot;selector-combinator-space-after&quot;: null,
-    &quot;selector-list-comma-newline-after&quot;: null,
-    &quot;selector-pseudo-element-colon-notation&quot;: null,
-    &quot;unit-no-unknown&quot;: null,
-    &quot;no-descending-specificity&quot;: null,
-    &quot;value-list-max-empty-lines&quot;: null
-  }
-}
-</code></pre>
-<p>在package.json中 即可</p>
-<pre><code class="language-js">{
-  &quot;scripts&quot;: {
-    &quot;precommit&quot;: &quot;npm run lint-staged&quot;,
-  },
-  &quot;lint-staged&quot;: {
-    &quot;**/*.{js,jsx}&quot;: &quot;lint-staged:js&quot;,
-    &quot;**/*.less&quot;: &quot;stylelint --syntax less&quot;
-  },
-}
-</code></pre>
 ]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[Babel之babylon]]></title>
-        <id>https://no-ane.github.io/post/babel-zhi-babylon</id>
-        <link href="https://no-ane.github.io/post/babel-zhi-babylon">
+        <id>https://no-ane.github.io/blog/post/babel-zhi-babylon</id>
+        <link href="https://no-ane.github.io/blog/post/babel-zhi-babylon">
         </link>
         <updated>2019-12-01T02:45:51.000Z</updated>
         <summary type="html"><![CDATA[<blockquote>
@@ -118,50 +38,12 @@
         <content type="html"><![CDATA[<blockquote>
 <p>ES6、ES7如何转化成ES5</p>
 </blockquote>
-<!-- more -->
-<p>这几天研究了一下 <em>jamiebuilds</em> 的 <em>the-super-tiny-compiler</em> 链接参上 https://github.com/jamiebuilds/the-super-tiny-compiler</p>
-<p>终于意识到自己一直可以毫无节操的使用ES6 ES7 ES8等到底是为啥 ， 作为一个一直花未来钱的人， 终究是要还的 [手动滑稽]</p>
-<p><em>jamiebuilds</em> 写的一个 <em>the-super-tiny-compiler</em> 应该就算是 <em>babylon</em> 的主要原理之一， 在这里记录一下学习的经历，免得以后过一段时间便遗忘， 并且也可以给现在看文章的你， 一些帮助。</p>
-<p>名词解释</p>
-<p><strong>AST</strong>： 抽象语法树</p>
-<h4 id="先说说原理">先说说原理</h4>
-<p>Babel 的三个主要处理步骤分别是： 解析（parse），转换（transform），生成（generate）。</p>
-<p><img src="http://ww1.sinaimg.cn/large/6d9c0eadgy1fuzthgay2vj20mz06gdfw.jpg" alt=""></p>
-<p>babel其实很简单， 没有高大上的编译原理xxx的。其实底层也相当于用了一个字符串替换的工具。</p>
-<h4 id="下面实现一下简单babel替换">下面实现一下简单babel替换</h4>
-<pre><code class="language-js">// 首先我们引入需要依赖的库 babylon 
-// 主要作为解析抽象语法书 遍历语法树 生成代码
-// babel-types是类似于前端的lodash工具库 （提升开发效率）
-// babel-template是可以让前端使用类似于es6的字符串模板 即允许带有占位符的代码来代替手动编码
-// 详细可看 上面安利的github链接
-import * as babylon from 'babylon'
-import traverse from 'babel-traverse'
-import * as t from 'babel-types'
-import generate from 'babel-generator'
-import template from 'babel-template'
-
-// template里的是源代码
-const buildRequire = template(`
-  let foo = 1
-`)
-
-// 替换如果遇到identifier类型的并且是foo的 即转成bar
-// 这里identifier是节点的类型
-const ast = buildRequire({
-  foo: t.identifier('bar')
-})
-
-console.log(ast) // let bar = 1;
-
-
-</code></pre>
-<p>这里已经是完成了代码的转换，十分的简单</p>
 ]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[聊一聊前后台通讯加密]]></title>
-        <id>https://no-ane.github.io/post/liao-yi-liao-qian-hou-tai-tong-xun-jia-mi</id>
-        <link href="https://no-ane.github.io/post/liao-yi-liao-qian-hou-tai-tong-xun-jia-mi">
+        <id>https://no-ane.github.io/blog/post/liao-yi-liao-qian-hou-tai-tong-xun-jia-mi</id>
+        <link href="https://no-ane.github.io/blog/post/liao-yi-liao-qian-hou-tai-tong-xun-jia-mi">
         </link>
         <updated>2019-12-01T02:39:37.000Z</updated>
         <summary type="html"><![CDATA[<blockquote>
@@ -171,180 +53,12 @@ console.log(ast) // let bar = 1;
         <content type="html"><![CDATA[<blockquote>
 <p>在开发程序的时候或多或少都有遇到过不想让别人爬到的数据， 尤其在前后台分离的页面中， 往往我们的数据只是通过一个接口就能得到，这里说一下加密方式的其中一种实现</p>
 </blockquote>
-<!-- more -->
-<p>在开发中往往有许多的加密方式， 但我们使用最多的就算AES对称加密</p>
-<p>但是AES中也有许多种模式</p>
-<h4 id="ecb模式电子密码本模式electronic-codebook">ECB模式（电子密码本模式：Electronic codebook）</h4>
-<p>ECB是最简单的块密码加密模式，加密前根据加密块大小（如AES为128位）分成若干块，之后将每块使用相同的密钥单独加密，解密同理。</p>
-<p>ECB模式由于每块数据的加密是独立的因此加密和解密都可以并行计算，ECB模式最大的缺点是相同的明文块会被加密成相同的密文块，这种方法在某些环境下不能提供严格的数据保密性。</p>
-<h4 id="cbc模式密码分组链接cipher-block-chaining">CBC模式（密码分组链接：Cipher-block chaining）</h4>
-<p>CBC模式对于每个待加密的密码块在加密前会先与前一个密码块的密文异或然后再用加密器加密。第一个明文块与一个叫初始化向量的数据块异或。</p>
-<p>CBC模式相比ECB有更高的保密性，但由于对每个数据块的加密依赖与前一个数据块的加密所以加密无法并行。与ECB一样在加密前需要对数据进行填充，不是很适合对流数据进行加密。</p>
-<h4 id="cfb模式密文反馈cipher-feedback">CFB模式(密文反馈:Cipher feedback)</h4>
-<p>与ECB和CBC模式只能够加密块数据不同，CFB能够将块密文（Block Cipher）转换为流密文（Stream Cipher）。</p>
-<p>注意:CFB、OFB和CTR模式中解密也都是用的加密器而非解密器。<br>
-CFB的加密工作分为两部分：</p>
-<p>1. 将一前段加密得到的密文再加密；</p>
-<p>2. 将第1步加密得到的数据与当前段的明文异或。</p>
-<p>由于加密流程和解密流程中被块加密器加密的数据是前一段密文，因此即使明文数据的长度不是加密块大小的整数倍也是不需要填充的，这保证了数据长度在加密前后是相同的。</p>
-<p>这种模式称为128位的CFB模式(又称CFB128)在OpenSSL中用来进行这种加解密的函数为AES_cfb128_encrypt</p>
-<h4 id="cfb8的加密流程">CFB8的加密流程</h4>
-<p>1. 使用加密器加密IV的数据；</p>
-<p>2. 将明文的最高8位与IV的最高8位异或得到8位密文；</p>
-<p>3. 将IV数据左移8位，最低8位用刚刚计算得到的8位密文补上。</p>
-<p>重复1到3。</p>
-<h4 id="cfb1的加密流程">CFB1的加密流程</h4>
-<p>1. 使用加密器加密IV的数据；</p>
-<p>2. 将明文的最高1位与IV的最高1位异或得到1位密文；</p>
-<p>3. 将IV数据左移1位，最低1位用刚刚计算得到的1位密文补上。</p>
-<p>重复1到3。</p>
-<h4 id="ofb模式输出反馈output-feedback">OFB模式（输出反馈：Output feedback）</h4>
-<p>OFB是先用块加密器生成密钥流（Keystream），然后再将密钥流与明文流异或得到密文流，解密是先用块加密器生成密钥流，再将密钥流与密文流异或得到明文，由于异或操作的对称性所以加密和解密的流程是完全一样的。</p>
-<p>OFB与CFB一样都非常适合对流数据的加密，OFB由于加密和解密都依赖与前一段数据，所以加密和解密都不能并行。</p>
-<p>以上即是AES加密的所有模式，但是我们在通讯过程中一般使用的是CBC模式下面我们具体看看CBC这个模式</p>
-<h5 id="cbc加解密流程图">CBC加解密流程图</h5>
-<p>加解密流程</p>
-<p><img src="https://ws1.sinaimg.cn/large/6d9c0eadgy1g9h0z77la5j20gg0ck75a.jpg" alt=""></p>
-<p>在假如我们前后台分离的情况下， 我们默认前端使用nodejs, 即使不是，我们前端解密方式理应一致.</p>
-<p>下面代码用到一个 key<br>
-初始密钥。根据 AES 规范，可以是 16 字节、24 字节和32 字节长，分别对应 128 位、192 位和 256 位</p>
-<p>因此这里的key需要为一个32位长度的字符串 (只要是字符串即可)</p>
-<p>key = '71343515636659378109866164286152'</p>
-<pre><code class="language-JS">  //加密
-  const enCrypt = () =&gt; {
-  // 待加密数据 向量iv 加密器 加密后密码串 
-  let bkdata, iv, cipher, coder;
-  // IV(长度与分组大小相同)  AES 的分组长度固定为 16 字节
-  iv = Buffer.alloc(16);
-  for (var i = 0 ; i &lt; 16 ; i++) {
-    iv[i] = ~~(Math.random() * 10);
-  }
-  // 待加密数据
-  bkdata = {
-    &quot;errcode&quot;: 0,
-    &quot;errmsg&quot;: &quot;ok&quot;
-  }
-
-  cipher = crypto.createCipheriv(&quot;aes-256-cbc&quot;, key, iv);
-  coder = [];
-  // 设置自动补全
-  cipher.setAutoPadding(true)
-  // 往密码串塞数据, 并使用base64加密
-  coder.push(cipher.update(JSON.stringify(bkdata), &quot;utf8&quot;, &quot;base64&quot;));
-  // 使用base64加密剩余填充部分  具体看nodejs官网介绍
-  coder.push(cipher.final(&quot;base64&quot;));
-  // 转成字符串
-  let back = coder.join(&quot;&quot;);
-  let buf;
-  // 把iv与加密数据合并,
-  buf = Buffer.concat([iv,new Buffer(back, 'base64')]);
-  // 转译成base64
-  let en_data = buf.toString('base64');
-  return en_data
-}
-</code></pre>
-<pre><code class="language-js">  //解密  消息体在body
-  const deCrypt = (body) =&gt; {
-  // 向量iv  待解密数据  buf  加密器  解密后数据   
-  let iv, enData, b, cipher, dedata;
-  ctx.encrypt_type = body;
-
-  b = new Buffer(body, 'base64');  //转成buf
-  iv = b.slice(0,16);
-  enData = b.slice(16);
-
-  cipher = crypto.createDecipheriv(&quot;aes-256-cbc&quot;, key, iv);
-  dedata = ''
-  dedata += cipher.update(enData);
-  dedata += cipher.final();
-  try {
-    dedata = JSON.parse(dedata)
-  }catch(e) {
-    dedata = '解密失败'
-  }
-  return dedata;
-}
-</code></pre>
-<p>在浏览器中和在nodejs中实现原理是一致的， 这里只需要通过引入 __buffer__和__browserify-aes__这两个库， 即可解决上述问题。</p>
-<p>还有一种方式。<br>
-目前这里key是通过接口返回给前端， 去掉buffer这个库，减少前端代码体积，就是iv和key都通过接口，这里还可以节省一个buffer的库，直接可用browserify-aes库解决</p>
-<p>即</p>
-<pre><code class="language-js">  // 这里是直接通过接口返回
-  const key = '71343515636659378109866164286152'
-  // IV(长度与分组大小相同)  AES 的分组长度固定为 16 字节
-  const iv = Buffer.alloc(16);
-  for (var i = 0 ; i &lt; 16 ; i++) {
-    iv[i] = ~~(Math.random() * 10);
-  }
-  return {
-    key,iv
-  }
-</code></pre>
-<pre><code class="language-JS">  //加密
-  const enCrypt = () =&gt; {
-  // 待加密数据 加密器 加密后密码串 
-  let bkdata, cipher, coder;
-  // 待加密数据
-  bkdata = {
-    &quot;errcode&quot;: 0,
-    &quot;errmsg&quot;: &quot;ok&quot;
-  }
-
-  // iv 从上面代码获取
-  cipher = crypto.createCipheriv(&quot;aes-256-cbc&quot;, key, iv);
-  coder = [];
-  // 设置自动补全
-  cipher.setAutoPadding(true)
-  // 往密码串塞数据, 并使用base64加密
-  coder.push(cipher.update(JSON.stringify(bkdata), &quot;utf8&quot;, &quot;base64&quot;));
-  // 使用base64加密剩余填充部分  具体看nodejs官网介绍
-  coder.push(cipher.final(&quot;base64&quot;));
-  // 转成字符串
-  let back = coder.join(&quot;&quot;);
-  let buf;
-  // 把iv与加密数据合并,
-  buf = Buffer.concat([iv,new Buffer(back, 'base64')]);
-  // 转译成base64
-  let en_data = buf.toString('base64');
-  return en_data
-}
-</code></pre>
-<pre><code class="language-js">  //解密  消息体在body
-  const deCrypt = (body) =&gt; {
-  // 向量iv  待解密数据  buf  加密器  解密后数据   
-  let iv, enData, b, cipher, dedata;
-  enData = body;
-
-  // iv通过上面代码获取
-  cipher = crypto.createDecipheriv(&quot;aes-256-cbc&quot;, key, iv);
-  dedata = ''
-  dedata += cipher.update(enData);
-  dedata += cipher.final();
-  try {
-    dedata = JSON.parse(dedata)
-  }catch(e) {
-    dedata = '解密失败'
-  }
-  return dedata;
-}
-</code></pre>
-<p>这里只是一种实现的方式，只是如果把iv隐藏到字符串中，爬虫的人应该更难知道使用的是哪种模式的加密。如果暴露iv出去则可猜测出可能是需要初始向量的加密模式， 当然你也可用使用欺骗的方式，多传个iv， 哈哈。可惜意义不大。</p>
-<br>
-<h5 id="总结-在前人栽树后人乘凉的情况下只是对数据加密这块并不复杂难的是这些加密背后的原理-如果大家看完还有余力-可以去下面的参考-再延伸一下">总结： 在前人栽树后人乘凉的情况下，只是对数据加密这块并不复杂，难的是这些加密背后的原理 如果大家看完还有余力， 可以去下面的参考 再延伸一下.</h5>
-<br>
-<br>
-<p>参考:</p>
-<ul>
-<li>https://blog.csdn.net/Vieri_32/article/details/48345023</li>
-<li>https://blog.poxiao.me/p/advanced-encryption-standard-and-block-cipher-mode/</li>
-<li>http://www.dannysite.com/blog/213/</li>
-</ul>
 ]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[Git Flow 科普篇]]></title>
-        <id>https://no-ane.github.io/post/git-flow-ke-pu-pian</id>
-        <link href="https://no-ane.github.io/post/git-flow-ke-pu-pian">
+        <id>https://no-ane.github.io/blog/post/git-flow-ke-pu-pian</id>
+        <link href="https://no-ane.github.io/blog/post/git-flow-ke-pu-pian">
         </link>
         <updated>2019-12-01T02:35:00.000Z</updated>
         <summary type="html"><![CDATA[<blockquote>
@@ -354,289 +68,23 @@ CFB的加密工作分为两部分：</p>
         <content type="html"><![CDATA[<blockquote>
 <p>学习如何使用GitFlow规范化git协作流程， 提升项目管理健壮性，更好的协同工作。</p>
 </blockquote>
-<!-- more -->
-<h3 id="什么是git-flow">什么是Git Flow</h3>
-<p>Git工作流程</p>
-<h3 id="git-flow工作流程图">Git Flow工作流程图</h3>
-<p><img src="https://nvie.com/img/git-model@2x.png" alt="git工作流程图"></p>
-<h4 id="gitflow-分支说明">GitFlow 分支说明</h4>
-<h5 id="master">Master</h5>
-<p>主要是用来放稳定，随时可上线的版本。这个分支的来源只能从别的分支合并过来，开发者不会直接承诺到这个分支。因为是稳定版本，所以通常也会在这个分支上的提交上打版本号号标签。</p>
-<h5 id="develop">Develop</h5>
-<p>这个分支主要是所有开发的基础分支，当要新增功能的时候，所有的特征分支都是从这个分支切出去的。而特征分支的功能完成后，也都会合并回来这个分支</p>
-<h5 id="hotfix">Hotfix</h5>
-<p>当线上产品发生紧急问题的时候，会从 Master 分支开一个 Hotfix 分支出来进行修复，Hotfix 分支修复完成之后，会合并回 Master 分支，也同时会合并一份到 Develop 分支。</p>
-<p>为什么要合并回 Develop 分支？如果不这么做，等到时候 Develop 分支完成并且合并回 Master 分支的时候，那个问题就又再次出现了。</p>
-<p>那为什么一开始不从 Develop 分支切出来修？因为 Develop 分支的功能可能尚在开发中，这时候硬是要从这里切出去修再合并回 Master 分支，只会造成更大的灾难。</p>
-<h5 id="release">Release</h5>
-<p>当认为 Develop 分支够成熟了，就可以把 Develop 分支合并到 Release 分支，在这边进行算是上线前的最后测试。测试完成后，Release 分支将会同时合并到 Master 以及 Develop 这两个分支上。 Master 分支是上线版本，而合并回 Develop 分支的目的，是因为可能在 Release 分支上还会测到并修正一些问题，所以需要跟 Develop 分支同步，免得之后的版本又再度出现同样的问题。</p>
-<h5 id="feature">Feature</h5>
-<p>当要开始新增功能的时候，就是使用 Feature 分支的时候了。 Feature 分支都是从 Develop 分支来的，完成之后会再并回 Develop 分支</p>
-<h4 id="从项目一步步带你入坑-by-命令行">从项目一步步带你入坑 by 命令行</h4>
-<h5 id="开展本地项目-连接到coding服务器github同理">开展本地项目 &amp;&amp; 连接到coding服务器(github同理)</h5>
-<pre><code class="language-gitbash"># 初始化一个项目
-mkdir project &amp;&amp; cd project
-# 添加gitignore文件
-vi .gitignore
-# 添加项目说明
-vi README.md
-# 初始化git项目
-git init
-# 添加所有文件到暂存区
-git add .
-# 向本地仓库提交当前的变动
-git commit -m &quot;chore: init&quot;
-# 添加到远程链接
-git remote add origin https://git.coding.net/panweizheng/demo.git
-# 上传到master
-git push -u origin master
-</code></pre>
-<h5 id="设置分支保护">设置分支保护</h5>
-<p>这里coding，码云和github是均有所不同， 大家可以自行查看</p>
-<p>在分支管理员加上自己<br>
-<img src="http://ww1.sinaimg.cn/large/6d9c0eadgy1fublgkddfcj21gi0nf40a.jpg" alt=""></p>
-<h5 id="回到本地开发">回到本地开发</h5>
-<pre><code class="language-gitbash"># 创建一个develop 分支
-git checkout -b develop
-# 把 develop 分支推到远程仓库（并-u设置为当前分支默认 pull 的远程分支）,在Git Flow流程里这个分支将会永远存在
-git push -u origin develop
-</code></pre>
-<h5 id="需求来了">需求来了</h5>
-<ul>
-<li>
-<ol>
-<li>新建Feature分支</li>
-</ol>
-</li>
-</ul>
-<pre><code class="language-gitbash">git checkout develop
-git checkout -b feature/my-first-feature
-</code></pre>
-<ul>
-<li>
-<ol start="2">
-<li>举例补充README.md说明</li>
-</ol>
-</li>
-</ul>
-<pre><code class="language-gitbash">echo 'It is test' &gt;&gt; README.md
-</code></pre>
-<ul>
-<li>
-<ol start="3">
-<li>添加到缓存区</li>
-</ol>
-</li>
-</ul>
-<pre><code class="language-gitbash">git add README.md
-</code></pre>
-<ul>
-<li>
-<ol start="4">
-<li>提交变更</li>
-</ol>
-</li>
-</ul>
-<pre><code class="language-gitbash">git commit -m 'docs: 补充说明'
-</code></pre>
-<ul>
-<li>
-<ol start="5">
-<li>如果是多人协同，则可上传到远程服务器，待特性开发完毕再删除</li>
-</ol>
-</li>
-</ul>
-<pre><code class="language-gitbash">git push origin feature/my-first-feature
-</code></pre>
-<ul>
-<li>
-<ol start="6">
-<li>开发过程中需要不断的把当前develop更新，减少合并时冲突</li>
-</ol>
-</li>
-</ul>
-<pre><code class="language-gitbash">git fetch origin develop
-git merge origin/develop
-# 上面这两句也可以合并为  git pull origin develop
-</code></pre>
-<h4 id="发布">发布</h4>
-<p>当Feature已经开发完毕，并且已经通过测试，这时候就需要把Feature分支合并到Develop</p>
-<pre><code class="language-gitbash"># 切换到develop
-git checkout develop
-# 拉取远程develop并更新本地develop
-git pull origin develop
-# merge本地开发好的Feature分支
-git merge feature/my-first-feature
-# 合并完毕后即可删除Feature
-git branch -d feature/my-first-feature
-git push origin --delete feature/my-first-feature
-# 提交develop分支到远程分支
-git push
-# 准备发布feature,从 develop 分支新建release分支
-git checkout -b release/v0.0.1
-# 最后验证，如果由bug直接在release中修改
-vi xx.js
-git add xx.js
-git commit -m 'fix: xx.js bug'
-git checkout develop
-git merge release/v0.0.1
-git push
-# 正式发布
-git checkout release/v0.0.1
-git push origin release/v0.0.1
-</code></pre>
-<h5 id="新建合并请求1">新建合并请求①</h5>
-<p>提pr拉</p>
-<p><img src="http://ww1.sinaimg.cn/large/6d9c0eadgy1fubmog2dsqj219z0hgt9e.jpg" alt=""></p>
-<p><img src="http://ww1.sinaimg.cn/large/6d9c0eadgy1fubmrhmpgdj219v0okjs9.jpg" alt=""></p>
-<h5 id="合并请求2">合并请求②</h5>
-<p><img src="http://ww1.sinaimg.cn/large/6d9c0eadgy1fubmtjln7zj20sk0giaah.jpg" alt=""></p>
-<p><img src="http://ww1.sinaimg.cn/large/6d9c0eadgy1fubmuxys66j21an0i6aau.jpg" alt=""></p>
-<p>至此 项目上线终于完毕了</p>
-<h5 id="but-万一线上出bug了呢">but! 万一线上出bug了呢</h5>
-<p>给你两条路 o.o</p>
-<p>1 . 回滚到上个稳定版本</p>
-<p>2 . 新建hotfix分支来解决这个bug</p>
-<p>这里主要还是建议使用hotfix. 毕竟新功能开发出来不用很亏的嘛</p>
-<pre><code class="language-gitbash">git checkout master 
-git pull origin master
-git checkout -b hotfix/my-first-bug
-# 改bug
-vi xx.js
-git add xx.js
-git commit -m 'fix: xx.js bug'
-git push origin hotfix/my-first-bug
-# 步骤重复 新建合并请求① &amp;&amp; 合并请求②
-# 合并之后回到本地
-git checkout master
-git pull origin master
-# merge修改过的代码
-git checkout develop
-git merge hotfix/my-first-bug
-git push origin develop
-# 发布完成后,删除本地hotfix分支
-git branch -d hotfix/my-first-bug
-# 在合并界面时我们删除了源分支，因此我们还需同步远程分支变动
-git fetch origin -p
-</code></pre>
-<p>回滚文件级别</p>
-<pre><code class="language-gitbash">git checkout master
-git pull origin master
-git checkout -b hotfix/my-first-bug
-# 查看某个文件历史
-git log xx.js
-# 恢复到某个版本的文件
-git reset 12345678 xx.js
-# 提交
-git cimmit -m 'fix: xx.js bug'
-# 验证如果没有bug 推送到远程分支
-git push origin hotfix/my-first-bug
-# 步骤重复 新建合并请求① &amp;&amp; 合并请求②
-# 合并后切回master, 拉取最新代码
-git checkout master
-git pull origin master
-# 发布完成后,删除本地hotfix分支
-git branch -d hotfix/my-first-bug
-# 在合并界面时我们删除了源分支，因此我们还需同步远程分支变动
-git fetch origin -p
-</code></pre>
-<p>回滚项目级别</p>
-<p>__不建议__使用命令操作远程仓库</p>
-<p>__建议__重新拉取远程仓库</p>
-<p>保证目录干净</p>
-<ul>
-<li>方法1 git checkout -b origin/分支名称</li>
-<li>方法2 git checkout &lt;commitId or Tag&gt;</li>
-</ul>
-<p>如果是多人协同，则可上传到远程服务</p>
-<h4 id="最后-git-flow-你值得拥有">最后， Git-Flow 你值得拥有。</h4>
-<p>参考</p>
-<ul>
-<li>https://github.com/nvie/gitflow</li>
-<li>https://www.git-tower.com/learn/git/ebook/cn/command-line/advanced-topics/git-flow</li>
-<li>https://datasift.github.io/gitflow/IntroducingGitFlow.html</li>
-<li>https://gitbook.tw/chapters/gitflow/why-need-git-flow.html</li>
-</ul>
 ]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[ DOM Event的发展历史 ]]></title>
-        <id>https://no-ane.github.io/post/dom-event-de-fa-zhan-li-shi</id>
-        <link href="https://no-ane.github.io/post/dom-event-de-fa-zhan-li-shi">
+        <id>https://no-ane.github.io/blog/post/dom-event-de-fa-zhan-li-shi</id>
+        <link href="https://no-ane.github.io/blog/post/dom-event-de-fa-zhan-li-shi">
         </link>
         <updated>2019-12-01T02:23:06.000Z</updated>
         <summary type="html"><![CDATA[<p>谈及到这里 我们就需要先了解一下什么是DOM0级 DOM一级 DOM二级， Think about it.. 以前我们刚刚学js的时候写的dom是怎么样的？</p>
 ]]></summary>
         <content type="html"><![CDATA[<p>谈及到这里 我们就需要先了解一下什么是DOM0级 DOM一级 DOM二级， Think about it.. 以前我们刚刚学js的时候写的dom是怎么样的？</p>
-<!-- more -->
-<h3 id="dom-0级">DOM 0级</h3>
-<p>写在HTML页面中</p>
-<pre><code class="language-html">&lt;button onclick=&quot;fn&quot;&gt;Click&lt;/button&gt;
-</code></pre>
-<pre><code class="language-js">// 绑定
-function fn() {
-  console.log(123123)
-}
-// 取消
-fn = null
-</code></pre>
-<p>先说说有什么好处 有什么不好..<br>
-好处就是方便啊  直接定一个函数 删除函数简单 引申_二级绑定_</p>
-<p>坏处是什么..</p>
-<p><em>代码入侵， 耦合度高</em> 如果这里需要修改一个变量名 则HTML和JS都要同时修改 如果HTML有多处命名 难免在某些情况下会漏掉.</p>
-<h3 id="dom-1级">DOM 1级</h3>
-<p>其实本来没有dom一级的说法.. 只是这个方法比0级要好 但是又比dom2级的事件委托稍微好一点点</p>
-<pre><code class="language-html">&lt;button id=&quot;btn&quot;&gt;Click&lt;/button&gt;
-</code></pre>
-<pre><code class="language-js">function func() {
-  console.log('hello')
-}
-// 绑定
-document.getElementById('btn').addEventListener('click', func)
-// 取消
-document.getElementById('btn').removeEventListener('click', func)
-
-</code></pre>
-<p><strong>坏处是啥</strong></p>
-<p>每一个元素都得绑定一个事件 如果我有一个 3 * 3 的表格 每一个点击的时候需要弹出一个 modal 显示详细的信息 此时则需要绑定 9次 才能解决这个问题</p>
-<p>还有硬要我说就是 解除绑定的时候有点麻烦..</p>
-<p><strong>好处是啥</strong></p>
-<p>降低代码耦合度 虽然每个元素都绑定一个id 或者 class 但是这个已经比 DOM0级好太多了  至少变量名只需要写一次..</p>
-<p>还有一个就是可以把js独立开来 打个比方： 如果你在网上看了别人一个写得很漂亮的库， 你把它download下来， 然后只需要在你希望触发的元素里加上 标识 [id,class] 就可以实现功能 . 这就是生产力啊。</p>
-<h3 id="dom-2级-dom操作的主流">DOM 2级 (DOM操作的主流)</h3>
-<pre><code class="language-html">&lt;table id=&quot;table&quot;&gt;
-  &lt;tr&gt;
-    &lt;td&gt;1&lt;/td&gt;
-    &lt;td&gt;2&lt;/td&gt;
-    &lt;td&gt;3&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;4&lt;/td&gt;
-    &lt;td&gt;5&lt;/td&gt;
-    &lt;td&gt;6&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;7&lt;/td&gt;
-    &lt;td&gt;8&lt;/td&gt;
-    &lt;td&gt;9&lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/table&gt;
-</code></pre>
-<pre><code class="language-js">// 触发的函数
-function func(e) {
-  console.log('当前我的是', e.target.innerHTML)
-}
-// 绑定
-document.getElementById('table').addEventListener('click', func)
-// 取消
-document.getElementById('table').removeEventListener('click', func)
-</code></pre>
 ]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[前端性能优化]]></title>
-        <id>https://no-ane.github.io/post/qian-duan-xing-neng-you-hua</id>
-        <link href="https://no-ane.github.io/post/qian-duan-xing-neng-you-hua">
+        <id>https://no-ane.github.io/blog/post/qian-duan-xing-neng-you-hua</id>
+        <link href="https://no-ane.github.io/blog/post/qian-duan-xing-neng-you-hua">
         </link>
         <updated>2019-12-01T01:57:38.000Z</updated>
         <summary type="html"><![CDATA[<p>老生常谈的性能优化点，不过很多同学都会把SSR这类增加用户体验的优化点也作为性能优化，这还是有一定的区别的。</p>
@@ -644,64 +92,17 @@ document.getElementById('table').removeEventListener('click', func)
 ]]></summary>
         <content type="html"><![CDATA[<p>老生常谈的性能优化点，不过很多同学都会把SSR这类增加用户体验的优化点也作为性能优化，这还是有一定的区别的。</p>
 <p>这里记录一下我所知道的性能优化点。</p>
-<!-- more -->
-<ul>
-<li>transform CSS GPU 加速</li>
-<li>数据量大 分开加载 requestAnimationFrame / setTimeout</li>
-<li>减少事件绑定</li>
-<li>减少内存消耗</li>
-<li>减少多余渲染</li>
-<li>减少DOM节点</li>
-<li>code-splitting （按需加载，提高js执行速度）</li>
-<li>扁平化 store 数据，时间复杂度降到 O(1)</li>
-<li>合并 storage 操作 ，减少io操作</li>
-<li>用 innerHTML 代替 DOM 操作，减少 DOM 操作次数，优化 javascript 性能</li>
-<li>少用全局变量、缓存DOM节点查找的结果。减少 IO 读取操作</li>
-<li>避免使用 CSS Expression（css表达式)又称 Dynamic properties(动态属性) 比如宽度 30%</li>
-</ul>
 ]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[lnmp下nginx配置ssl]]></title>
-        <id>https://no-ane.github.io/post/lnmp-xia-nginx-pei-zhi-ssl</id>
-        <link href="https://no-ane.github.io/post/lnmp-xia-nginx-pei-zhi-ssl">
+        <id>https://no-ane.github.io/blog/post/lnmp-xia-nginx-pei-zhi-ssl</id>
+        <link href="https://no-ane.github.io/blog/post/lnmp-xia-nginx-pei-zhi-ssl">
         </link>
         <updated>2019-11-17T02:13:27.000Z</updated>
         <summary type="html"><![CDATA[<p>帮助所有的新手玩家配置SSL，它没有HTTP那么简单，只需要开放个80端口，还是需要一些额外的配置，这里把步骤都记录下来，以后排查问题更加简单。</p>
 ]]></summary>
         <content type="html"><![CDATA[<p>帮助所有的新手玩家配置SSL，它没有HTTP那么简单，只需要开放个80端口，还是需要一些额外的配置，这里把步骤都记录下来，以后排查问题更加简单。</p>
-<!-- more -->
-<p>1）<br>
-首先申请域名ssl。申请的时候注意看域名，比如 example.com / www.example.com 。因为如果用免费版的ssl，只能对应出这个 server name 的 443 端口</p>
-<p>2）<br>
-审核通过之后，下载证书，放在nginx下 如 /usr/local/nginx/cert 目录下。里面应该含有 *.pem *.key 两个文件，改成名 a.pem a.key。</p>
-<p>3）<br>
-配置阿里云服务器的安全组，开通允许 443 端口访问</p>
-<p>4）<br>
-nginx conf 增加下面 server 配置 反向代理端口</p>
-<pre><code class="language-nginx">server {
-        listen 443 ssl;
-        server_name www.example.com;
-
-        ssl_certificate   /usr/local/nginx/cert/a.pem;
-        ssl_certificate_key  /usr/local/nginx/cert/a.key;
-
-        ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
-        ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
-        ssl_prefer_server_ciphers on;
-
-        location / {
-          proxy_set_header X-Real-IP $remote_addr;
-          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-          proxy_set_header Host $http_host;
-          proxy_set_header X-NginX-Proxy true;
-          proxy_pass http://127.0.0.1:8000;
-          proxy_redirect off;
-        }
-}
-
-</code></pre>
-<p>配置完成后即可访问 https://www.example.com</p>
 ]]></content>
     </entry>
 </feed>
