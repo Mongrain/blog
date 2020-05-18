@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>标签列表 | Gusty</title>
+<title>如何杀死一个已经detached的screen会话？ | Gusty</title>
 <meta name="description" content="记录一下码畜生活。">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -91,14 +91,56 @@
 
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
-          <h2 class="tag-list-title">标签列表</h2>
-          <div class="tags-container">
+          <div class="post-detail">
+            <h2 class="post-title">如何杀死一个已经detached的screen会话？</h2>
+            <div class="post-date">2019-12-01</div>
             
-              <a class="tag" href="https://no-ane.github.io/blog/tag/XVoxQBW11">前端杂谈</a>
+            <div class="post-content">
+              <p>如果想杀死一个已经detached的screen会话，可以使用以下命令：</p>
+<pre><code class="language-bash">screen -X -S [session # you want to kill] quit
+</code></pre>
+<p>举例如下：</p>
+<pre><code class="language-bash">[root@localhost ~]# screen -ls
+There are screens on:
+        9975.pts-0.localhost    (Detached)
+        4588.pts-3.localhost    (Detached)
+2 Sockets in /var/run/screen/S-root.
+
+[root@localhost ~]# screen -X -S 4588 quit
+[root@localhost ~]# screen -ls
+There is a screen on:
+        9975.pts-0.localhost    (Detached)
+1 Socket in /var/run/screen/S-root.
+</code></pre>
+<p>可以看到，4588会话已经没有了。</p>
+<p>参考资料：<br>
+（1）Kill detached screen session。</p>
+
+            </div>
             
-              <a class="tag" href="https://no-ane.github.io/blog/tag/y3t3Z4fe4">服务器知识</a>
+              <div class="tag-container">
+                
+                  <a href="https://no-ane.github.io/blog/tag/y3t3Z4fe4" class="tag">
+                    服务器知识
+                  </a>
+                
+              </div>
             
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://no-ane.github.io/blog/post/qian-duan-xing-neng-you-hua">
+                  <h3 class="post-title">
+                    前端性能优化
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
           </div>
+
         </div>
       </div>
     </div>
